@@ -288,3 +288,25 @@ END //
 
 DELIMITER ;
 
+CREATE PROCEDURE GetSlotsForSport(IN input_sport_id INT)
+BEGIN
+    SELECT 
+        id AS SlotID, 
+        TIME_FORMAT(start_time, '%H:%i') AS StartTime, 
+        TIME_FORMAT(end_time, '%H:%i') AS EndTime,
+        slot_type AS Days
+    FROM slots 
+    WHERE sport_id = input_sport_id;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE BookSlot(IN input_user_id INT, IN input_slot_id INT)
+BEGIN
+    INSERT INTO bookings (user_id, slot_id, booking_time) VALUES (input_user_id, input_slot_id, NOW());
+END //
+
+DELIMITER ;
